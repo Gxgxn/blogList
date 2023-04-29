@@ -73,6 +73,24 @@ test("like property defaults to 0 if not provided", async () => {
   expect(addedBlog.likes).toBe(0);
 });
 
+test("wont save without a valid title or url", async () => {
+  const newBlog = {
+    // title: "React patterns Test",
+    author: "Michael Chan",
+    url: "https://reactpatterns.com/",
+    likes: 7,
+  };
+  const newBlog2 = {
+    title: "React patterns Test",
+    author: "Michael Chan",
+    // url: "https://reactpatterns.com/",
+    likes: 7,
+  };
+
+  await api.post("/api/blogs").send(newBlog).expect(400);
+  await api.post("/api/blogs").send(newBlog2).expect(400);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });

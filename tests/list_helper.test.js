@@ -5,6 +5,7 @@ test("dummy returns one", () => {
   const result = listHelper.dummy(blogs);
   expect(result).toBe(1);
 });
+
 const blogs = [
   {
     _id: "5a422a851b54a676234d17f7",

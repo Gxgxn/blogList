@@ -3,15 +3,16 @@ const express = require("express");
 const app = express();
 const blogRouter = require("./controllers/blog");
 const morgan = require("morgan");
+const logger = require("./utils/logger");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
 mongoose
   .connect(config.MONGO_URI)
   .then(() => {
-    console.info("connected to MongoDB");
+    logger.info("connected to MongoDB");
   })
   .catch((error) => {
-    console.error("error connecting to MongoDB:", error.message);
+    logger.error("error connecting to MongoDB:", error.message);
   });
 
 app.use(express.json());

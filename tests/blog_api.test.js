@@ -97,7 +97,19 @@ describe("deletion of a blog", () => {
     expect(contents).not.toContain(blogToDelete);
   });
 });
+test("updating likes on blog with an id", async () => {
+  const notesAtStart = await helper.getAllBlogsInDB();
 
+  const noteToUpdated = notesAtStart[1];
+  noteToUpdated.likes++;
+  const resultNote = await api
+    .put(`/api/blogs/${noteToUpdated.id}`)
+    .send(noteToUpdated)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  expect(resultNote.body.likes).toEqual(noteToUpdated.likes);
+});
 afterAll(async () => {
   await mongoose.connection.close();
 });

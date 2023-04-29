@@ -30,4 +30,17 @@ blogRouter.delete("/:id", async (request, response, next) => {
   }
 });
 
+blogRouter.put("/:id", async (request, response, next) => {
+  try {
+    const blog = request.body;
+    if (!blog) throw new Error("Body Missing");
+    const updatedNote = await Blog.findByIdAndUpdate(request.params.id, blog, {
+      new: true,
+    });
+    response.status(200).json(updatedNote);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = blogRouter;

@@ -51,15 +51,6 @@ test("like property defaults to 0 if not provided", async () => {
     url: "https://reactpatterns.com/",
     // likes: 7,
   };
-
-  // const response = await api
-  //   .get("/api/blogs")
-  //   .send(newBlog)
-  //   .expect(201)
-  //   .expect("Content-Type", /application\/json/);
-
-  // expect(response.likes).toBeDefined().toEqual(0);
-
   await api
     .post("/api/blogs")
     .send(newBlog)
@@ -81,7 +72,7 @@ test("wont save without a valid title or url", async () => {
     likes: 7,
   };
   const newBlog2 = {
-    title: "React patterns Test",
+    // title: "React patterns Test",
     author: "Michael Chan",
     // url: "https://reactpatterns.com/",
     likes: 7,
@@ -89,6 +80,22 @@ test("wont save without a valid title or url", async () => {
 
   await api.post("/api/blogs").send(newBlog).expect(400);
   await api.post("/api/blogs").send(newBlog2).expect(400);
+});
+describe("deletion of a blog", () => {
+  test("succeeds with status code 204 if id is valid", async () => {
+    const currentBlogs = await helper.getAllBlogsInDB();
+    const blogToDelete = currentBlogs[0];
+
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+
+    const blogsAtEnd = await helper.getAllBlogsInDB();
+
+    expect(blogsAtEnd).toHaveLength(currentBlogs.length - 1);
+
+    const contents = blogsAtEnd.map((r) => r.content);
+
+    expect(contents).not.toContain(blogToDelete);
+  });
 });
 
 afterAll(async () => {

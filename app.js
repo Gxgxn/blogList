@@ -4,6 +4,7 @@ const app = express();
 const blogRouter = require("./controllers/blog");
 const morgan = require("morgan");
 const logger = require("./utils/logger");
+const middleware = require("./utils/middleware");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
 mongoose
@@ -18,5 +19,8 @@ mongoose
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use("/api/blogs", blogRouter);
+
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 module.exports = app;

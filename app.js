@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const blogRouter = require("./controllers/blog");
 const userRouter = require("./controllers/user");
+const loginRouter = require("./controllers/login");
 const morgan = require("morgan");
 const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
@@ -19,8 +20,10 @@ mongoose
 
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(middleware.tokenExtracter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", userRouter);
+app.use("/api/login", loginRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   name: String,
+  blogs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Blog",
+    },
+  ],
   passwordHash: {
     type: String,
     required: true,

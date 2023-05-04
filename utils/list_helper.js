@@ -53,10 +53,12 @@ const favoriteBlog = (blogs) => {
     return null;
   }
 };
+
 module.exports = {
   totalLikes,
   dummy,
   mostBlogs,
   favoriteBlog,
   mostLikes,
+  usersInDb,
 };

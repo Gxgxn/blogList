@@ -11,6 +11,10 @@ beforeEach(async () => {
     let newBlogObj = new Blog(blog);
     await newBlogObj.save();
   }
+  //   const noteObjects = helper.initialNotes
+  //   .map(note => new Note(note))
+  // const promiseArray = noteObjects.map(note => note.save())
+  // await Promise.all(promiseArray)
 });
 
 test("getting length of stored blogs", async () => {

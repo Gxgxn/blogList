@@ -7,6 +7,7 @@ const Blog = require("../model/blog.js");
 const helper = require("./test_helper.js");
 const User = require("../model/user.js");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 beforeEach(async () => {
   await Blog.deleteMany({});
   for (let blog of helper.blogs) {
@@ -123,12 +124,11 @@ describe("when there is initially one user in db", () => {
 
     const passwordHash = await bcrypt.hash("sekret", 10);
     const user = new User({ username: "root", passwordHash });
-
     await user.save();
   });
 
   test("creation fails with proper statuscode and message if username already taken", async () => {
-    const usersAtStart = await list_helper.usersInDb();
+    const usersAtStart = await test_helper.usersInDb();
 
     const newUser = {
       username: "root",

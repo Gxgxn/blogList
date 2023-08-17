@@ -7,7 +7,7 @@ const url =
 mongoose.connect(url);
 console.log("Connecting to", url);
 const blogSchema = new mongoose.Schema({
-  title: String,
+  title: { type: String, required: true },
   author: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
